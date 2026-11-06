@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Séances</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4faf9;--ink:#2e2e2e;--soft:#eef2f1;--soft2:#e1e8e6;--f:'Plus Jakarta Sans',-apple-system,system-ui,sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.35 var(--f);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1320px;margin:0 auto;padding:0 24px 40px}
+nav{display:flex;gap:68px;padding-top:50px}
+nav button{background:none;border:0;padding:0;font:500 15px var(--f);color:var(--ink);cursor:pointer}
+h1{font:800 50px/1 var(--f);letter-spacing:-.04em;margin:56px 0 18px}
+.sec{font:800 24px/1 var(--f);letter-spacing:-.03em;margin:70px 0 0}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:14px;height:43px;padding:0 11px 0 17px;background:#fff;border-radius:99px;font-weight:500}
+.x{width:22px;height:22px;border-radius:50%;border:0;background:none;display:grid;place-items:center;cursor:pointer;color:var(--ink);padding:0}
+.x:hover{background:var(--ink);color:#fff}
+.bars{display:flex;gap:21px;flex-wrap:wrap;margin-top:22px}
+.bar{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:#fff;border-radius:18px;padding:11px}
+.bar button{height:41px;padding:0 20px;border:0;border-radius:12px;background:none;font:500 15px var(--f);color:var(--ink);cursor:pointer;white-space:nowrap}
+.bar button.on{background:var(--ink);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:58px 38px;margin-top:42px}
+.poster{position:relative;aspect-ratio:2/3;border-radius:20px;overflow:hidden;background:var(--soft2)}
+.poster img{width:100%;height:100%;object-fit:cover;display:block}
+.st{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(255,255,255,.92);font-size:16px;line-height:1;cursor:pointer;opacity:0;transition:opacity .15s;color:var(--ink)}
+.poster:hover .st,.st.on{opacity:1}
+@media(hover:none){.st{opacity:1}}
+.info{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px}
+.tx{min-width:0}
+.yr{font-size:11px;font-weight:500}
+.nm{font:700 17px/1.2 var(--f);letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
+.nm a{color:var(--ink);display:inline-flex}
+.dr{font-size:13px;line-height:1.3}
+.sb{flex:none;border:0;background:var(--soft);border-radius:12px;height:34px;padding:0 11px;font:700 11px var(--f);color:var(--ink);cursor:pointer}
+.sb:hover{background:var(--soft2)}
+.ov{position:fixed;inset:0;background:rgba(30,40,38,.28);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:20}
+.md{background:#fff;border-radius:24px;max-width:560px;width:100%;max-height:85vh;overflow:auto;padding:26px}
+.md h3{font:800 28px/1.1 var(--f);letter-spacing:-.04em;margin:0}
+.md .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.dy{font-weight:700;text-transform:capitalize;margin:20px 0 4px}
+.cn{font-size:13px;margin-top:8px}
+.tm{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.tm a,.tm span{background:var(--soft);border-radius:10px;padding:6px 12px;font-weight:500;font-size:14px;color:var(--ink);text-decoration:none}
+.tm a:hover{background:var(--soft2)}
+.tm small{font-size:11px;margin-left:5px;opacity:.7}
+.card{background:#fff;border-radius:18px;padding:20px;margin-top:18px;max-width:640px}
+.card p{margin:6px 0 12px;font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+input,select{font:500 15px var(--f);color:var(--ink);background:var(--bg);border:0;border-radius:12px;height:41px;padding:0 14px;flex:1;min-width:140px;outline:none}
+select{flex:none}
+.btn{height:41px;padding:0 20px;border:0;border-radius:12px;background:var(--ink);color:#fff;font:500 15px var(--f);cursor:pointer}
+.btn.l{background:var(--soft);color:var(--ink)}
+.rc{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:14px 14px 14px 20px;margin-top:10px;max-width:640px}
+.err{background:#fff;border-radius:14px;padding:12px 16px;margin-top:14px;font-size:14px;max-width:640px;border-left:4px solid var(--ink)}
+.mut{font-size:13px;opacity:.65}
+footer{text-align:center;font-size:12px;opacity:.5;padding:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <button data-act="tab" data-v="fav">Favoris</button>
+    <button data-act="tab" data-v="search">Recherche</button>
+    <button data-act="tab" data-v="set">Réglages</button>
+  </nav>
+  <main id="app"></main>
+</div>
+<footer id="foot"></footer>
+
+<script>
+const DEFAULTS = [
+  { q: 'arcades', label: 'Cinéma Les Arcades' },
+  { q: 'olympia', label: 'Cinéma Olympia' },
+  { q: 'cineum',  label: 'Cineum Cannes' }
+];
+const LS = {
+  get(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch { return d; } },
+  set(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+};
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ICON_X = '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7"/></svg>';
+const ICON_EXT = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+
+let tmdbKey = LS.get('tmdbKey', ''), proxy = LS.get('proxy', ''), key = LS.get('key', ''),
+    favC = LS.get('favC', []), favM = LS.get('favM', []), done = LS.get('done', {});
+let view = 'fav', notices = [], progs = {}, REL = {}, lastAll = [], lastErrs = [], lastFilms = [],
+    flt = { period: 'week', type: 'all' };
+
+/* ---------- Service API Cinéma ---------- */
+async function api(path) {
+  if (!key && !proxy) throw new Error('Ajoute le proxy ou ta clé API dans Réglages.');
+  let r;
+  try {
+    r = proxy ? await fetch(proxy.replace(/\/$/, '') + '/v1' + path)
+              : await fetch('https://api.api-cinema.com/v1' + path, { headers: { Authorization: 'Bearer ' + key } });
+  } catch { throw new Error('Requête bloquée (réseau ou CORS). Voir Réglages.'); }
+  const q = r.headers.get('x-weekly-quota-remaining');
+  if (q !== null) { LS.set('quota', q); updFoot(); }
+  if (r.status === 401 || r.status === 403) throw new Error('Clé refusée par API Cinéma.');
+  if (r.status === 429) throw new Error('Quota dépassé : réessaie lundi (00:00 UTC).');
+  if (!r.ok) throw new Error('Erreur API ' + r.status);
+  return r.json();
+}
+async function cached(k, hours, fn, force) {
+  const c = LS.get(k, null);
+  if (c && !force && Date.now() - c.t < hours * 36e5) return c.d;
+  const d = await fn();
+  try { LS.set(k, { t: Date.now(), d }); } catch { purge(); }
+  return d;
+}
+function purge() { Object.keys(localStorage).filter(k => k.startsWith('c:')).forEach(k => localStorage.removeItem(k)); }
+const ymd = d => d.toLocaleDateString('sv');
+const slim = s => ({
+  t: s.startsAt, v: s.version, f: s.format, b: s.bookingUrl,
+  m: { id: s.movie?.id || s.movieId, tmdb: s.movie?.tmdbId ?? null, title: s.movie?.title || '?', year: s.movie?.year,
+       dur: s.movie?.durationMin, dir: s.movie?.director, genres: s.movie?.genres || [], poster: s.movie?.posterUrl }
+});
+function loadProg(id, force) {
+  const to = new Date(Date.now() + 8 * 864e5);
+  return cached('c:p:' + id, 12, async () => {
+    const j = await api(`/cinemas/${encodeURIComponent(id)}/showtimes?to=${ymd(to)}&include=movie&limit=500`);
+    return j.data.map(slim);
+  }, force);
+}
+const loadInfo = id => cached('c:i:' + id, 24, async () => { const j = await api('/cinemas/' + encodeURIComponent(id)); return j.data || j; });
+
+/* ---------- TMDB : date de sortie française ---------- */
+async function loadRel(ids) {
+  if (!tmdbKey) return;
+  await Promise.all(ids.filter(i => !(i in REL)).map(async i => {
+    try {
+      REL[i] = await cached('c:r:' + i, 720, async () => {
+        const r = await fetch(`https://api.themoviedb.org/3/movie/${i}/release_dates?api_key=${encodeURIComponent(tmdbKey)}`);
+        if (!r.ok) throw new Error('tmdb');
+        const fr = ((await r.json()).results || []).find(x => x.iso_3166_1 === 'FR');
+        const by = t => (fr?.release_dates || []).filter(d => d.type === t).map(d => d.release_date.slice(0, 10)).sort()[0];
+        return by(3) || by(2) || '';
+      });
+    } catch {}
+  }));
+}
+const kind = s => { const r = REL[s.m.tmdb]; return r && s.t.slice(0, 10) < r ? 'a' : 'n'; };
+
+/* ---------- Favoris par défaut (ids réels, une seule fois) ---------- */
+async function initDefaults() {
+  if (!key && !proxy) return;
+  for (const t of DEFAULTS) {
+    if (done[t.q]) continue;
+    try {
+      const j = await api(`/cinemas?q=${t.q}&city=Cannes&country=FR`);
+      if (j.data.length === 1) {
+        const c = j.data[0];
+        if (!favC.some(x => x.id === c.id)) favC.push({ id: c.id, name: c.name, city: c.city });
+        done[t.q] = true;
+      } else notices.push(`${t.label} : ${j.data.length ? 'plusieurs résultats' : 'introuvable'} dans API Cinéma, ajoute-le via Recherche.`);
+    } catch (e) { notices.push(`${t.label} : ${e.message}`); break; }
+  }
+  LS.set('favC', favC); LS.set('done', done);
+}
+
+/* ---------- Utilitaires d'affichage ---------- */
+const short = n => (n.replace(/^cin[ée]ma\s+/i, '').replace(/^les\s+/i, '').replace(/\s+cannes$/i, '').trim() || n);
+const fmtD = d => new Date(d + 'T12:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+const dayLab = d => new Date(d + 'T12:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+const errBox = m => `<div class="err">${esc(m)}</div>`;
+function range(p) {
+  const n = new Date(), d = new Date(n.getFullYear(), n.getMonth(), n.getDate()), w = d.getDay();
+  const add = k => { const x = new Date(d); x.setDate(x.getDate() + k); return ymd(x); };
+  if (p === 'week') return { start: ymd(d), end: add(6 - ((w + 4) % 7)) };   // semaine cinéma : mercredi → mardi
+  if (w === 5) return { start: ymd(d), end: add(2) };
+  if (w === 6) return { start: ymd(d), end: add(1) };
+  if (w === 0) return { start: ymd(d), end: ymd(d) };
+  return { start: add(5 - w), end: add(7 - w) };
+}
+function updFoot() {
+  const q = LS.get('quota', null);
+  $('#foot').textContent = q !== null ? `Requêtes restantes cette semaine : ${q}` : '';
+}
+function setView(v) {
+  view = v;
+  ({ fav: renderFav, search: renderSearch, set: renderSet })[v]();
+}
+const posterHtml = (m, withStar = true) => {
+  const on = favM.some(x => x.tmdb === m.tmdb);
+  return `<div class="poster">${m.poster ? `<img src="${esc(m.poster)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ''}
+    ${withStar && m.tmdb ? `<button class="st ${on ? 'on' : ''}" title="Film favori" data-act="fm" data-tmdb="${m.tmdb}" data-title="${esc(m.title)}" data-poster="${esc(m.poster || '')}">${on ? '★' : '☆'}</button>` : ''}</div>`;
+};
+const lbLink = m => m.tmdb ? `<a href="https://letterboxd.com/tmdb/${m.tmdb}" target="_blank" rel="noopener" title="Letterboxd">${ICON_EXT}</a>` : '';
+
+/* ---------- Favoris ---------- */
+function barsHtml() {
+  const g = (k, items) => `<div class="bar">${items.map(([v, l]) => `<button class="${flt[k] === v ? 'on' : ''}" data-act="flt" data-k="${k}" data-v="${v}">${l}</button>`).join('')}</div>`;
+  return g('period', [['week', 'Cette semaine'], ['wk', 'Ce week-end']]) +
+         g('type', [['all', 'Tout'], ['n', 'Séances normales'], ['a', 'Avant-premières'], ['p', 'Prochainement']]);
+}
+function renderFav() {
+  $('#app').innerHTML = `
+    <h1>Séances</h1>
+    ${notices.map(errBox).join('')}
+    ${!key && !proxy ? errBox('Ajoute le proxy ou ta clé API dans Réglages pour charger les séances.') : ''}
+    <div class="chips">${favC.map(c => `<span class="chip">${esc(short(c.name))}<button class="x" data-act="rm" data-id="${esc(c.id)}" title="Retirer">${ICON_X}</button></span>`).join('') || '<span class="mut">Aucun cinéma favori. Utilise Recherche pour en ajouter.</span>'}</div>
+    <div class="bars" id="bars">${barsHtml()}</div>
+    <div id="all"><p class="mut" style="margin-top:42px">Chargement…</p></div>
+    <div id="favfilms"></div>`;
+  updFilms();
+  loadAll();
+}
+async function loadAll() {
+  const el = $('#all');
+  if (!favC.length) { el.innerHTML = ''; return; }
+  const res = await Promise.allSettled(favC.map(c => loadProg(c.id)));
+  const errs = [];
+  res.forEach((r, i) => { if (r.status === 'fulfilled') progs[favC[i].id] = r.value; else errs.push(`${short(favC[i].name)} : ${r.reason.message}`); });
+  const infos = await Promise.allSettled(favC.map(c => loadInfo(c.id)));
+  infos.forEach((r, i) => {
+    if (r.status !== 'fulfilled') return;
+    const chk = r.value.programmeCheckedAt;
+    if (!chk || Date.now() - new Date(chk) > 2 * 864e5) errs.push(`${short(favC[i].name)} : programmation possiblement périmée (dernière lecture : ${chk ? chk.slice(0, 10) : 'jamais'}).`);
+  });
+  lastAll = favC.flatMap(c => (progs[c.id] || []).map(s => ({ ...s, c })));
+  lastErrs = errs;
+  await loadRel([...new Set(lastAll.map(s => s.m.tmdb).filter(Boolean))]);
+  drawAll(); updFilms();
+}
+function card({ m, s }) {
+  const rel = REL[m.tmdb], today = ymd(new Date());
+  const top = rel > today ? (s.some(x => x.t.slice(0, 10) < rel) ? 'Avant-première · ' : '') + 'sortie le ' + fmtD(rel) : (m.year || '');
+  return `<div>${posterHtml(m)}
+    <div class="info"><div class="tx"><div class="yr">${esc(top) || '&nbsp;'}</div>
+      <div class="nm">${esc(m.title)}${lbLink(m)}</div>
+      <div class="dr">${m.dir ? 'De ' + esc(m.dir) : ''}</div></div>
+      <button class="sb" data-act="sc" data-k="${esc(m.tmdb || m.id)}">Séances</button></div></div>`;
+}
+function drawAll() {
+  const el = $('#all'); if (!el) return;
+  $('#bars').innerHTML = barsHtml();
+  const { start, end } = range(flt.period), today = ymd(new Date()), t = flt.type;
+  if ((t === 'a' || t === 'p') && !tmdbKey) { el.innerHTML = errBox('Ajoute ta clé TMDB dans Réglages pour distinguer avant-premières et sorties prochaines.'); return; }
+  let q = lastAll.filter(s => { const d = s.t.slice(0, 10); return d >= start && d <= end; });
+  if (t === 'n') q = q.filter(s => kind(s) === 'n');
+  if (t === 'a') q = q.filter(s => kind(s) === 'a');
+  if (t === 'p') q = q.filter(s => REL[s.m.tmdb] > today);
+  const g = new Map();
+  q.sort((x, y) => x.t.localeCompare(y.t)).forEach(s => { const k = s.m.tmdb || s.m.id; if (!g.has(k)) g.set(k, { m: s.m, s: [] }); g.get(k).s.push(s); });
+  lastFilms = [...g.values()];
+  if (t === 'p') lastFilms.sort((x, y) => REL[x.m.tmdb].localeCompare(REL[y.m.tmdb]));
+  el.innerHTML = lastErrs.map(errBox).join('') + (lastFilms.length ? `<div class="grid">${lastFilms.map(card).join('')}</div>` : '<p class="mut" style="margin-top:42px">Aucun film.</p>');
+}
+function updFilms() {
+  const el = $('#favfilms'); if (!el) return;
+  if (!favM.length) { el.innerHTML = ''; return; }
+  el.innerHTML = `<h2 class="sec">Films favoris</h2><div class="grid">${favM.map(f => {
+    const playing = lastAll.some(s => s.m.tmdb === f.tmdb);
+    return `<div>${posterHtml(f)}<div class="info"><div class="tx"><div class="nm">${esc(f.title)}${lbLink(f)}</div>
+      <div class="dr">${playing ? 'À l’affiche cette semaine' : 'Pas à l’affiche'}</div></div>
+      ${playing ? `<button class="sb" data-act="sc" data-k="${f.tmdb}">Séances</button>` : ''}</div></div>`;
+  }).join('')}</div>`;
+}
+function openModal(k) {
+  const s = lastAll.filter(x => String(x.m.tmdb || x.m.id) === String(k)).sort((a, b) => a.t.localeCompare(b.t));
+  if (!s.length) return;
+  const m = s[0].m, days = [...new Set(s.map(x => x.t.slice(0, 10)))];
+  const chip = x => {
+    const lab = `${esc(x.t.slice(11, 16))}<small>${esc(x.v === 'UNKNOWN' ? '' : x.v)}${x.f && x.f !== '2D' && x.f !== 'UNKNOWN' ? ' ' + esc(x.f) : ''}</small>`;
+    return x.b ? `<a href="${esc(x.b)}" target="_blank" rel="noopener">${lab}</a>` : `<span>${lab}</span>`;
+  };
+  const o = document.createElement('div');
+  o.className = 'ov'; o.dataset.act = 'close';
+  o.innerHTML = `<div class="md"><div class="top"><div><h3>${esc(m.title)}</h3>
+    <div class="mut" style="margin-top:6px">${[m.year, m.dur && m.dur + ' min', m.dir, (m.genres || []).slice(0, 2).join(', ')].filter(Boolean).map(esc).join(' · ')}</div></div>
+    <button class="x" data-act="close" title="Fermer">${ICON_X}</button></div>
+    ${days.map(d => `<div class="dy">${esc(dayLab(d))}</div>${[...new Set(s.filter(x => x.t.slice(0, 10) === d).map(x => x.c.id))].map(cid =>
+      `<div class="cn">${esc(short(favC.find(c => c.id === cid)?.name || ''))}</div><div class="tm">${s.filter(x => x.t.slice(0, 10) === d && x.c.id === cid).map(chip).join('')}</div>`).join('')}`).join('')}
+  </div>`;
+  document.body.appendChild(o);
+}
+
+/* ---------- Recherche ---------- */
+function renderSearch() {
+  $('#app').innerHTML = `
+    <h1>Recherche</h1>
+    <div class="row" style="max-width:640px">
+      <select id="mode"><option value="c">Cinémas</option><option value="f">Films à l’affiche</option></select>
+      <input id="q" placeholder="Nom ou code postal">
+      <input id="city" placeholder="Ville (cinémas)">
+      <button class="btn" data-act="search">Chercher</button>
+    </div><div id="res"></div>`;
+}
+async function doSearch() {
+  const mode = $('#mode').value, q = $('#q').value.trim(), city = $('#city').value.trim(), res = $('#res');
+  if (!q && !city) return;
+  res.innerHTML = '<p class="mut">Recherche…</p>';
+  try {
+    if (mode === 'c') {
+      const p = new URLSearchParams({ country: 'FR', limit: '20' });
+      if (/^\d{2,5}$/.test(q)) p.set('zip_code', q); else if (q) p.set('q', q);
+      if (city) p.set('city', city);
+      const { data } = await api('/cinemas?' + p);
+      res.innerHTML = data.length ? data.map(c => `<div class="rc"><div><b>${esc(c.name)}</b><div class="mut">${esc([c.address, c.postalCode, c.city].filter(Boolean).join(' '))}</div></div>
+        <button class="btn ${favC.some(x => x.id === c.id) ? '' : 'l'}" data-act="tg" data-id="${esc(c.id)}" data-name="${esc(c.name)}" data-city="${esc(c.city)}">${favC.some(x => x.id === c.id) ? '★ Favori' : '☆ Ajouter'}</button></div>`).join('') : '<p class="mut">Aucun résultat.</p>';
+    } else {
+      const { data } = await api('/movies?' + new URLSearchParams({ q, playing: 'true', country: 'FR', limit: '24' }));
+      const seen = new Set();
+      const list = data.filter(m => { const k = m.tmdbId || m.id; if (seen.has(k)) return false; seen.add(k); return true; });
+      res.innerHTML = list.length ? `<div class="grid">${list.map(m => {
+        const mm = { tmdb: m.tmdbId, title: m.title, poster: m.posterUrl };
+        return `<div>${posterHtml(mm)}<div class="info"><div class="tx"><div class="yr">${esc(m.year || '')}</div><div class="nm">${esc(m.title)}${lbLink(mm)}</div><div class="dr">${m.director ? 'De ' + esc(m.director) : ''}</div></div></div></div>`;
+      }).join('')}</div>` : '<p class="mut">Aucun film.</p>';
+    }
+  } catch (e) { res.innerHTML = errBox(e.message); }
+}
+
+/* ---------- Réglages ---------- */
+function renderSet() {
+  $('#app').innerHTML = `
+    <h1>Réglages</h1>
+    <div class="card"><b>Proxy (recommandé)</b>
+      <p>Adresse de ton Cloudflare Worker (worker.js). Il garde la clé API Cinéma côté serveur.</p>
+      <div class="row" style="margin:0"><input id="proxy" placeholder="https://xxx.workers.dev" value="${esc(proxy)}"></div></div>
+    <div class="card"><b>Clé API Cinéma (sans proxy)</b>
+      <p>Stockée uniquement dans ce navigateur, jamais dans le fichier.</p>
+      <div class="row" style="margin:0"><input id="key" type="password" placeholder="ac_live_…" value="${esc(key)}"></div></div>
+    <div class="card"><b>Clé TMDB (gratuite)</b>
+      <p>Date de sortie française des films : avant-premières et sorties prochaines.</p>
+      <div class="row" style="margin:0"><input id="tmdb" type="password" placeholder="Clé API v3" value="${esc(tmdbKey)}"></div></div>
+    <div class="row"><button class="btn" data-act="savekey">Enregistrer</button>
+      <button class="btn l" data-act="refresh">Vider le cache</button></div>
+    <p class="mut" style="max-width:640px">Les programmes sont gardés 12 h en cache pour économiser les 150 requêtes hebdomadaires.</p>`;
+}
+
+/* ---------- Actions ---------- */
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const d = b.dataset;
+  if (d.act === 'close') { if (e.target.closest('.md') && !e.target.closest('.x')) return; document.querySelector('.ov')?.remove(); }
+  else if (d.act === 'tab') setView(d.v);
+  else if (d.act === 'rm') { favC = favC.filter(c => c.id !== d.id); LS.set('favC', favC); lastAll = lastAll.filter(s => s.c.id !== d.id); renderFav(); }
+  else if (d.act === 'tg') {
+    if (favC.some(c => c.id === d.id)) favC = favC.filter(c => c.id !== d.id); else favC.push({ id: d.id, name: d.name, city: d.city });
+    LS.set('favC', favC); const on = favC.some(c => c.id === d.id);
+    b.textContent = on ? '★ Favori' : '☆ Ajouter'; b.classList.toggle('l', !on);
+  }
+  else if (d.act === 'flt') { flt[d.k] = d.v; drawAll(); }
+  else if (d.act === 'sc') openModal(d.k);
+  else if (d.act === 'fm') {
+    const t = +d.tmdb;
+    if (favM.some(f => f.tmdb === t)) favM = favM.filter(f => f.tmdb !== t); else favM.push({ tmdb: t, title: d.title, poster: d.poster });
+    LS.set('favM', favM);
+    const on = favM.some(f => f.tmdb === t);
+    document.querySelectorAll(`.st[data-tmdb="${t}"]`).forEach(x => { x.textContent = on ? '★' : '☆'; x.classList.toggle('on', on); });
+    updFilms();
+  }
+  else if (d.act === 'search') doSearch();
+  else if (d.act === 'savekey') {
+    key = $('#key').value.trim(); LS.set('key', key);
+    proxy = $('#proxy').value.trim(); LS.set('proxy', proxy);
+    tmdbKey = $('#tmdb').value.trim(); LS.set('tmdbKey', tmdbKey); REL = {}; notices = [];
+    await initDefaults(); setView('fav');
+  }
+  else if (d.act === 'refresh') { purge(); progs = {}; REL = {}; setView('fav'); }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelector('.ov')?.remove();
+  if (e.key === 'Enter' && (e.target.id === 'q' || e.target.id === 'city')) doSearch();
+});
+
+(async () => { updFoot(); setView('fav'); await initDefaults(); if (notices.length) renderFav(); else if (favC.length && !lastAll.length && !$('#all')?.querySelector('.grid')) renderFav(); })();
+</script>
+</body>
+</html>
