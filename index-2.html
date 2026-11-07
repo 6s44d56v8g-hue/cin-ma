@@ -71,6 +71,7 @@ select{flex:none}
 .btn.l{background:var(--soft);color:var(--ink)}
 .rc{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#fff;padding:14px 14px 14px 20px;margin:10px 0 0 3px;max-width:640px}
 .err{background:#fff;padding:12px 16px;margin:14px 0 0 3px;font-size:13px;max-width:640px}
+.dg{font-size:13px;line-height:1.4;margin-top:10px}
 .mut{font-size:13px;font-weight:300;margin-left:3px}
 .mine{margin:36px 0 0 3px}
 .mine h2{font:500 16px/1.33 var(--f);letter-spacing:-.07em;color:var(--ink);margin:0;text-box:trim-both cap alphabetic}
@@ -214,7 +215,7 @@ function loadProg(id, force) {
   return cached('c:q:' + id, 12, async () =>
     (await fetchAll(`/cinemas/${encodeURIComponent(id)}/showtimes?to=${ymd(to)}&include=movie&limit=1000`)).map(slim), force);
 }
-const loadInfo = id => cached('c:i:' + id, 24, async () => { const j = await api('/cinemas/' + encodeURIComponent(id)); return j.data || j; });
+const loadInfo = id => cached('c:i:' + id, 48, async () => { const j = await api('/cinemas/' + encodeURIComponent(id)); return j.data || j; });
 
 /* TMDB : date de sortie FR + affiche de secours */
 async function loadRel(ids) {
@@ -306,7 +307,7 @@ const errBox = m => `<div class="err" ${SQ(10)}>${esc(m)}</div>`;
 function range(p) {
   const n = new Date(), d = new Date(n.getFullYear(), n.getMonth(), n.getDate()), w = d.getDay();
   const add = k => { const x = new Date(d); x.setDate(x.getDate() + k); return ymd(x); };
-  if (p === 'week') return { start: ymd(d), end: add(6 - ((w + 4) % 7)) };
+  if (p === 'week') return { start: ymd(d), end: add(7) };
   if (w === 5) return { start: ymd(d), end: add(2) };
   if (w === 6) return { start: ymd(d), end: add(1) };
   if (w === 0) return { start: ymd(d), end: ymd(d) };
@@ -459,6 +460,22 @@ async function doSearch() {
   post();
 }
 
+function diagHtml() {
+  if (!favC.length) return '';
+  const rows = favC.flatMap(c => idsOf(c).map(id => {
+    const p = LS.get('c:q:' + id, null), i = LS.get('c:i:' + id, null);
+    const d = p?.d || [], days = d.map(s => s.t.slice(0, 10)).sort();
+    const films = new Set(d.map(s => s.m.tmdb || s.m.id)).size;
+    const chk = i?.d?.programmeCheckedAt;
+    return `<div class="dg"><b>${esc(short(c.name))}</b> <span class="mut" style="margin:0">(${esc(id)})</span><br>${p
+      ? `${d.length} séances · ${films} films · du ${esc(days[0]?.slice(5) || '?')} au ${esc(days[days.length - 1]?.slice(5) || '?')} · chargé il y a ${Math.round((Date.now() - p.t) / 36e4) / 10} h`
+      : 'pas encore chargé'}${chk ? ` · programme lu par l’API le ${esc(chk.slice(0, 16).replace('T', ' '))} UTC` : ''}</div>`;
+  }));
+  return `<div class="card" ${SQ(18)}><div>Diagnostic des cinémas</div>
+    <p>Ce que l’API a renvoyé pour chaque cinéma. Si une séance manque ici, elle manque dans l’API Cinéma ; si elle est ici mais pas à l’accueil, c’est un filtre.</p>${rows.join('')}
+    <div class="row" style="margin:14px 0 0"><button class="btn l" ${SQ(10)} data-act="reload">Recharger maintenant</button></div>
+    <p style="margin-top:8px">Coûte au moins une requête par cinéma.</p></div>`;
+}
 function messages() {
   const m = [];
   if (!key && !proxy) m.push('Ajoute le proxy ou ta clé API Cinéma ci-dessous pour charger les séances.');
@@ -479,6 +496,7 @@ function renderSet() {
     <div class="card" ${SQ(18)}><div>Clé TMDB (gratuite)</div>
       <p>Date de sortie française des films (avant-premières, sorties prochaines) et affiches de secours.</p>
       <input id="tmdb" ${SQ(10)} type="password" placeholder="Clé API v3" value="${esc(tmdbKey)}" style="width:100%"></div>
+    ${diagHtml()}
     <div class="row"><button class="btn" ${SQ(10)} data-act="savekey">Enregistrer</button>
       <button class="btn l" ${SQ(10)} data-act="refresh">Vider le cache</button></div>
     <p class="mut" style="max-width:640px;margin-top:20px">Les programmes sont gardés 12 h en cache pour économiser les 150 requêtes hebdomadaires.</p>`;
@@ -517,6 +535,10 @@ document.addEventListener('click', async e => {
     proxy = $('#proxy').value.trim(); LS.set('proxy', proxy);
     tmdbKey = $('#tmdb').value.trim(); LS.set('tmdbKey', tmdbKey); REL = {}; notices = [];
     await initDefaults(); if (notices.length) setView('set'); else setView('fav');
+  }
+  else if (d.act === 'reload') {
+    favC.forEach(c => idsOf(c).forEach(id => { localStorage.removeItem('c:q:' + id); localStorage.removeItem('c:i:' + id); }));
+    progs = {}; setView('fav');
   }
   else if (d.act === 'refresh') { purge(); progs = {}; REL = {}; setView('fav'); }
 });
