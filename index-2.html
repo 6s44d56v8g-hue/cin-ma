@@ -6,59 +6,81 @@
 <title>Séances</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4faf9;--ink:#2e2e2e;--soft:#eef2f1;--soft2:#e1e8e6;--f:'Plus Jakarta Sans',-apple-system,system-ui,sans-serif;color-scheme:light}
+:root{--bg:#f4f9f9;--ink:#343434;--ink2:#2f2f2f;--soft:#edf2f2;--f:'Readex Pro',system-ui,sans-serif;color-scheme:light}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.35 var(--f);-webkit-font-smoothing:antialiased}
-.wrap{max-width:1320px;margin:0 auto;padding:0 24px 40px}
-nav{display:flex;gap:68px;padding-top:50px}
-nav button{background:none;border:0;padding:0;font:500 15px var(--f);color:var(--ink);cursor:pointer}
-h1{font:800 50px/1 var(--f);letter-spacing:-.04em;margin:56px 0 18px}
-.sec{font:800 24px/1 var(--f);letter-spacing:-.03em;margin:70px 0 0}
+body{margin:0;background:var(--bg);color:var(--ink2);font:400 14px/1.33 var(--f)}
+.wrap{width:min(1280px,100% - 48px);margin:0 auto;padding:57px 0 40px}
+/* Texte rogné au cap-height, comme dans Figma */
+nav button,h1,.sec,.chip>span,.bar button,.y span,.nm,.dr,.sb,.btn{text-box:trim-both cap alphabetic}
+nav{display:flex;gap:65px;margin-left:3px}
+nav button{background:none;border:0;padding:0;font:400 14px/1.33 var(--f);color:var(--ink2);cursor:pointer}
+h1{font:600 45px/1.33 var(--f);letter-spacing:-.07em;color:var(--ink);margin:67px 0 20px 3px}
+.sec{font:600 24px/1.33 var(--f);letter-spacing:-.07em;color:var(--ink);margin:80px 0 0 3px}
+.top{margin-left:3px}
 .chips{display:flex;gap:10px;flex-wrap:wrap}
-.chip{display:inline-flex;align-items:center;gap:14px;height:43px;padding:0 11px 0 17px;background:#fff;border-radius:99px;font-weight:500}
-.x{width:22px;height:22px;border-radius:50%;border:0;background:none;display:grid;place-items:center;cursor:pointer;color:var(--ink);padding:0}
-.x:hover{background:var(--ink);color:#fff}
-.bars{display:flex;gap:21px;flex-wrap:wrap;margin-top:22px}
-.bar{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:#fff;border-radius:18px;padding:11px}
-.bar button{height:41px;padding:0 20px;border:0;border-radius:12px;background:none;font:500 15px var(--f);color:var(--ink);cursor:pointer;white-space:nowrap}
+.chip{display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 16px;background:#fff}
+.chip>span{font:400 14px/1.33 var(--f);letter-spacing:-.07em;color:var(--ink2);white-space:nowrap}
+.x{width:22px;height:22px;padding:0;border:0;background:none;cursor:pointer;display:block;flex:none}
+.x svg{display:block}.x circle{fill:#fff}.x path{stroke:var(--ink)}
+.x:hover circle{fill:var(--ink)}.x:hover path{stroke:#fff}
+.bars{display:flex;gap:20px;flex-wrap:wrap;margin:20px 0 0 3px}
+.bar{display:flex;gap:10px;padding:10px;background:#fff}
+.bar button{width:155px;height:40px;border:0;background:#fff;color:var(--ink2);font:400 14px/1.33 var(--f);letter-spacing:-.07em;cursor:pointer;white-space:nowrap}
 .bar button.on{background:var(--ink);color:#fff}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:58px 38px;margin-top:42px}
-.poster{position:relative;aspect-ratio:2/3;border-radius:20px;overflow:hidden;background:var(--soft2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,182px);gap:63px 36px;justify-content:start;margin:58px 0 0 3px}
+@media(max-width:700px){.grid{margin-left:0;justify-content:center}}
+.cd{width:182px}
+.poster{position:relative;width:182px;height:272px;background:#e3ebeb;overflow:hidden}
 .poster img{width:100%;height:100%;object-fit:cover;display:block}
-.st{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(255,255,255,.92);font-size:16px;line-height:1;cursor:pointer;opacity:0;transition:opacity .15s;color:var(--ink)}
+.ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;background:var(--soft)}
+.ph span{font:600 14px/1.2 var(--f);letter-spacing:-.07em;color:var(--ink)}
+.st{position:absolute;top:11px;right:11px;width:33px;height:33px;padding:0;border:0;background:#fff;cursor:pointer;opacity:0;transition:opacity .15s;z-index:1;display:block;line-height:0}
+.st path{fill:none}.st.on path{fill:var(--ink)}
 .poster:hover .st,.st.on{opacity:1}
 @media(hover:none){.st{opacity:1}}
-.info{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px}
-.tx{min-width:0}
-.yr{font-size:11px;font-weight:500}
-.nm{font:700 17px/1.2 var(--f);letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
-.nm a{color:var(--ink);display:inline-flex}
-.dr{font-size:13px;line-height:1.3}
-.sb{flex:none;border:0;background:var(--soft);border-radius:12px;height:34px;padding:0 11px;font:700 11px var(--f);color:var(--ink);cursor:pointer}
-.sb:hover{background:var(--soft2)}
-.ov{position:fixed;inset:0;background:rgba(30,40,38,.28);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:20}
-.md{background:#fff;border-radius:24px;max-width:560px;width:100%;max-height:85vh;overflow:auto;padding:26px}
-.md h3{font:800 28px/1.1 var(--f);letter-spacing:-.04em;margin:0}
-.md .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-.dy{font-weight:700;text-transform:capitalize;margin:20px 0 4px}
-.cn{font-size:13px;margin-top:8px}
+.info{display:flex;align-items:flex-end;gap:6px;margin-top:13px}
+.tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:7px}
+.y{display:flex;align-items:center;gap:9px;min-height:1px}
+.y span{font:400 10px/1.33 var(--f);letter-spacing:-.07em;color:var(--ink2)}
+.y a{display:flex;line-height:0}
+.nm{font:600 19px/1.33 var(--f);letter-spacing:-.07em;color:var(--ink);white-space:nowrap;overflow:hidden}
+.nm.sm{font-size:12px;line-height:.97;letter-spacing:-.07em;white-space:normal;overflow:visible}
+.dr{font:300 14px/1.33 var(--f);letter-spacing:-.07em;color:var(--ink2)}
+.sb{flex:none;width:56px;height:35px;border:0;background:var(--soft);color:var(--ink);font:500 10px/1.33 var(--f);cursor:pointer}
+.sb:hover{background:#e2eaea}
+.ov{position:fixed;inset:0;background:rgba(52,52,52,.25);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:20}
+.md{background:#fff;width:100%;max-width:560px;max-height:85vh;overflow:auto;padding:26px}
+.mh{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.mh h3{font:600 28px/1.15 var(--f);letter-spacing:-.07em;color:var(--ink);margin:0}
+.dy{font-weight:500;text-transform:capitalize;margin:22px 0 2px;color:var(--ink)}
+.cn{font-size:13px;margin-top:8px;font-weight:300}
 .tm{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
-.tm a,.tm span{background:var(--soft);border-radius:10px;padding:6px 12px;font-weight:500;font-size:14px;color:var(--ink);text-decoration:none}
-.tm a:hover{background:var(--soft2)}
-.tm small{font-size:11px;margin-left:5px;opacity:.7}
-.card{background:#fff;border-radius:18px;padding:20px;margin-top:18px;max-width:640px}
-.card p{margin:6px 0 12px;font-size:13px}
-.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-input,select{font:500 15px var(--f);color:var(--ink);background:var(--bg);border:0;border-radius:12px;height:41px;padding:0 14px;flex:1;min-width:140px;outline:none}
+.tm a,.tm span{background:var(--soft);padding:8px 12px;font-weight:400;font-size:14px;color:var(--ink);text-decoration:none}
+.tm a:hover{background:#e2eaea}
+.tm small{font-size:10px;margin-left:5px;opacity:.7}
+.card{background:#fff;padding:20px;margin-top:20px;max-width:640px;margin-left:3px}
+.card p{margin:6px 0 12px;font-size:13px;font-weight:300}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 0 3px}
+input,select{font:400 14px var(--f);color:var(--ink);background:var(--bg);border:0;height:40px;padding:0 14px;flex:1;min-width:140px;outline:none}
 select{flex:none}
-.btn{height:41px;padding:0 20px;border:0;border-radius:12px;background:var(--ink);color:#fff;font:500 15px var(--f);cursor:pointer}
+.btn{height:40px;padding:0 20px;border:0;background:var(--ink);color:#fff;font:400 14px var(--f);cursor:pointer}
 .btn.l{background:var(--soft);color:var(--ink)}
-.rc{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:14px 14px 14px 20px;margin-top:10px;max-width:640px}
-.err{background:#fff;border-radius:14px;padding:12px 16px;margin-top:14px;font-size:14px;max-width:640px;border-left:4px solid var(--ink)}
-.mut{font-size:13px;opacity:.65}
-footer{text-align:center;font-size:12px;opacity:.5;padding:20px}
+.rc{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#fff;padding:14px 14px 14px 20px;margin:10px 0 0 3px;max-width:640px}
+.err{background:#fff;padding:12px 16px;margin:14px 0 0 3px;font-size:13px;max-width:640px}
+.mut{font-size:13px;font-weight:300;margin-left:3px}
+.mine{margin:36px 0 0 3px}
+.mine h2{font:500 16px/1.33 var(--f);letter-spacing:-.07em;color:var(--ink);margin:0;text-box:trim-both cap alphabetic}
+.mrow{display:flex;gap:16px;margin-top:13px;flex-wrap:wrap}
+.mp{position:relative;width:80px;height:119px;padding:0;border:0;background:#e3ebeb;overflow:hidden;cursor:pointer;display:block}
+.mp img{width:100%;height:100%;object-fit:cover;display:block}
+.mp .ph{padding:6px}.mp .ph span{font-size:10px;line-height:1.2}
+.add{position:relative;width:80px;height:119px;padding:0;border:0;background:none;cursor:pointer;display:grid;place-items:center}
+.add svg.d{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+.add .pl{position:relative}
+#mine+#all .grid,#mine+#all>p{margin-top:40px}
+footer{text-align:center;font-size:11px;font-weight:300;opacity:.55;padding:20px}
 </style>
 </head>
 <body>
@@ -73,6 +95,54 @@ footer{text-align:center;font-size:12px;opacity:.5;padding:20px}
 <footer id="foot"></footer>
 
 <script>
+/* ============ Corner smoothing Figma (squircle) ============
+   Géométrie identique à Figma : arrondi continu, "Corner Smoothing" = 100 % (1),
+   budget d'arrondi = min(largeur, hauteur) / 2, lissage réduit si la place manque
+   (comportement par défaut de Figma). Le tracé est recalculé à chaque
+   redimensionnement de l'élément, donc exact à toutes les tailles. */
+function sqPath(w, h, radius, smoothing = 1) {
+  const budget = Math.min(w, h) / 2;
+  const r = Math.min(radius, budget);
+  if (r <= 0) return `M0 0H${w}V${h}H0Z`;
+  const rad = x => x * Math.PI / 180;
+  let s = Math.min(smoothing, budget / r - 1);
+  const p = Math.min((1 + smoothing) * r, budget);
+  const arcM = 90 * (1 - s);
+  const arc = Math.sin(rad(arcM / 2)) * r * Math.SQRT2;
+  const alpha = (90 - arcM) / 2;
+  const p3p4 = r * Math.tan(rad(alpha / 2));
+  const beta = 45 * s;
+  const c = p3p4 * Math.cos(rad(beta));
+  const d = c * Math.tan(rad(beta));
+  const b = (p - arc - c - d) / 3, a = 2 * b;
+  const f = n => +n.toFixed(4);
+  const A = f(a), B = f(b), C = f(c), D = f(d), AB = f(a + b), ABC = f(a + b + c), BC = f(b + c), L = f(arc), R = f(r);
+  return `M${f(w - p)} 0` +
+    `c${A} 0 ${AB} 0 ${ABC} ${D}a${R} ${R} 0 0 1 ${L} ${L}c${D} ${C} ${D} ${BC} ${D} ${ABC}` +
+    `L${w} ${f(h - p)}` +
+    `c0 ${A} 0 ${AB} ${-D} ${ABC}a${R} ${R} 0 0 1 ${-L} ${L}c${-C} ${D} ${-BC} ${D} ${-ABC} ${D}` +
+    `L${f(p)} ${h}` +
+    `c${-A} 0 ${-AB} 0 ${-ABC} ${-D}a${R} ${R} 0 0 1 ${-L} ${-L}c${-D} ${-C} ${-D} ${-BC} ${-D} ${-ABC}` +
+    `L0 ${f(p)}` +
+    `c0 ${-A} 0 ${-AB} ${D} ${-ABC}a${R} ${R} 0 0 1 ${L} ${-L}c${C} ${-D} ${BC} ${-D} ${ABC} ${-D}Z`;
+}
+const sqRO = new ResizeObserver(es => es.forEach(e => sqApply(e.target)));
+function sqApply(el) {
+  const { width: w, height: h } = el.getBoundingClientRect();
+  if (!w || !h) return;
+  if (el.dataset.sqd) {   // contour pointillé, trait « inside » de Figma (1 px, tirets 14/14, #343434 à 23 %), même géométrie
+    el.querySelector('svg.d').innerHTML = `<path d="${sqPath(w - 1, h - 1, +el.dataset.sqd - 0.5)}" transform="translate(.5 .5)" fill="none" stroke="rgba(52,52,52,.23)" stroke-dasharray="14 14"/>`;
+    return;
+  }
+  el.style.borderRadius = '0';
+  el.style.clipPath = `path('${sqPath(w, h, +el.dataset.sq)}')`;
+}
+function sqScan() {
+  document.querySelectorAll('[data-sq]:not([data-o]),[data-sqd]:not([data-o])').forEach(el => { el.dataset.o = 1; sqRO.observe(el); });
+}
+const SQ = r => `data-sq="${r}" style="border-radius:${r}px"`;   // repli (border-radius) tant que le tracé n'est pas calculé
+
+/* ============ Données ============ */
 const DEFAULTS = [
   { q: 'arcades', label: 'Cinéma Les Arcades' },
   { q: 'olympia', label: 'Cinéma Olympia' },
@@ -84,15 +154,17 @@ const LS = {
 };
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const ICON_X = '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7"/></svg>';
-const ICON_EXT = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+/* Icônes exportées telles quelles depuis Figma */
+const ICON_X = '<svg class="xi" width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11"/><path d="M7.53613 14.6064L14.6072 7.53538"/><path d="M7.53613 7.53516L14.6072 14.6062"/></svg>';
+const ICON_EXT = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="0.5" y="2" width="9" height="9" rx="2.5" stroke="#343434"/><rect x="5" y="0.5" width="6" height="6" fill="#F4F9F9"/><path d="M5 6.5L5.35355 6.85355L11.3536 0.853553L11 0.5L10.6464 0.146446L4.64645 6.14645L5 6.5ZM11.5 0.499999C11.5 0.223857 11.2761 -4.30791e-07 11 -5.57231e-07L6.5 -4.94011e-07C6.22386 -3.25423e-07 6 0.223857 6 0.5C6 0.776142 6.22386 1 6.5 1L10.5 1L10.5 5C10.5 5.27614 10.7239 5.5 11 5.5C11.2761 5.5 11.5 5.27614 11.5 5L11.5 0.499999Z" fill="#343434"/></svg>';
 
+const STAR = '<svg width="33" height="33" viewBox="0 0 33 33" fill="none"><path d="M17.9326 14.0283L18.0449 14.373H23.0449L19.2939 17.0986L19 17.3125L19.1123 17.6582L20.5439 22.0664L16.7939 19.3418L16.5 19.1289L16.2061 19.3418L12.4551 22.0664L13.8877 17.6582L14 17.3125L13.7061 17.0986L9.95508 14.373H14.9551L15.0674 14.0283L16.5 9.61816L17.9326 14.0283Z" stroke="#343434"/></svg>';
+const PLUS = '<svg class="pl" width="17" height="17" viewBox="0 0 17 17" fill="none"><path d="M8.03613 16.0713L8.03613 1.27666e-06" stroke="#C8CCCC" stroke-width="2"/><path d="M7.02499e-07 8.03516L16.0713 8.03516" stroke="#C8CCCC" stroke-width="2"/></svg>';
 let tmdbKey = LS.get('tmdbKey', ''), proxy = LS.get('proxy', ''), key = LS.get('key', ''),
     favC = LS.get('favC', []), favM = LS.get('favM', []), done = LS.get('done', {});
 let view = 'fav', notices = [], progs = {}, REL = {}, lastAll = [], lastErrs = [], lastFilms = [],
     flt = { period: 'week', type: 'all' };
 
-/* ---------- Service API Cinéma ---------- */
 async function api(path) {
   if (!key && !proxy) throw new Error('Ajoute le proxy ou ta clé API dans Réglages.');
   let r;
@@ -130,7 +202,7 @@ function loadProg(id, force) {
 }
 const loadInfo = id => cached('c:i:' + id, 24, async () => { const j = await api('/cinemas/' + encodeURIComponent(id)); return j.data || j; });
 
-/* ---------- TMDB : date de sortie française ---------- */
+/* TMDB : date de sortie FR + affiche de secours */
 async function loadRel(ids) {
   if (!tmdbKey) return;
   await Promise.all(ids.filter(i => !(i in REL)).map(async i => {
@@ -146,8 +218,35 @@ async function loadRel(ids) {
   }));
 }
 const kind = s => { const r = REL[s.m.tmdb]; return r && s.t.slice(0, 10) < r ? 'a' : 'n'; };
+/* Affiche manquante : API Cinéma → TMDB (par tmdbId, jamais par titre) → vignette avec le titre */
+async function tmdbPoster(id) {
+  if (!tmdbKey || !id) return '';
+  try {
+    const path = await cached('c:t:' + id, 720, async () => {
+      const r = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${encodeURIComponent(tmdbKey)}&language=fr-FR`);
+      if (!r.ok) throw new Error('tmdb');
+      return (await r.json()).poster_path || '';
+    });
+    return path ? 'https://image.tmdb.org/t/p/w500' + path : '';
+  } catch { return ''; }
+}
+async function fillPosters() {
+  const miss = [...new Set(lastAll.filter(s => !s.m.poster && s.m.tmdb).map(s => s.m.tmdb))];
+  await Promise.all(miss.map(async id => {
+    const u = await tmdbPoster(id);
+    if (u) lastAll.forEach(s => { if (s.m.tmdb === id && !s.m.poster) s.m.poster = u; });
+  }));
+}
+async function posterFail(img) {
+  const t = img.dataset.tmdb;
+  if (!img.dataset.t && t) {
+    img.dataset.t = 1;
+    const u = await tmdbPoster(t);
+    if (u && u !== img.src) { img.src = u; return; }
+  }
+  img.replaceWith(Object.assign(document.createElement('div'), { className: 'ph', innerHTML: `<span>${esc(img.dataset.title || '')}</span>` }));
+}
 
-/* ---------- Favoris par défaut (ids réels, une seule fois) ---------- */
 async function initDefaults() {
   if (!key && !proxy) return;
   for (const t of DEFAULTS) {
@@ -164,15 +263,15 @@ async function initDefaults() {
   LS.set('favC', favC); LS.set('done', done);
 }
 
-/* ---------- Utilitaires d'affichage ---------- */
+/* ============ Affichage ============ */
 const short = n => (n.replace(/^cin[ée]ma\s+/i, '').replace(/^les\s+/i, '').replace(/\s+cannes$/i, '').trim() || n);
 const fmtD = d => new Date(d + 'T12:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
 const dayLab = d => new Date(d + 'T12:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-const errBox = m => `<div class="err">${esc(m)}</div>`;
+const errBox = m => `<div class="err" ${SQ(10)}>${esc(m)}</div>`;
 function range(p) {
   const n = new Date(), d = new Date(n.getFullYear(), n.getMonth(), n.getDate()), w = d.getDay();
   const add = k => { const x = new Date(d); x.setDate(x.getDate() + k); return ymd(x); };
-  if (p === 'week') return { start: ymd(d), end: add(6 - ((w + 4) % 7)) };   // semaine cinéma : mercredi → mardi
+  if (p === 'week') return { start: ymd(d), end: add(6 - ((w + 4) % 7)) };
   if (w === 5) return { start: ymd(d), end: add(2) };
   if (w === 6) return { start: ymd(d), end: add(1) };
   if (w === 0) return { start: ymd(d), end: ymd(d) };
@@ -182,20 +281,27 @@ function updFoot() {
   const q = LS.get('quota', null);
   $('#foot').textContent = q !== null ? `Requêtes restantes cette semaine : ${q}` : '';
 }
-function setView(v) {
-  view = v;
-  ({ fav: renderFav, search: renderSearch, set: renderSet })[v]();
+function post() {
+  sqScan();
+  requestAnimationFrame(() => document.querySelectorAll('.nm').forEach(el => {
+    el.classList.remove('sm');
+    if (el.scrollWidth > el.clientWidth + 1) el.classList.add('sm');
+  }));
 }
+document.fonts?.ready.then(post);
+function setView(v) { view = v; ({ fav: renderFav, search: renderSearch, set: renderSet })[v](); post(); }
+
 const posterHtml = (m, withStar = true) => {
   const on = favM.some(x => x.tmdb === m.tmdb);
-  return `<div class="poster">${m.poster ? `<img src="${esc(m.poster)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ''}
-    ${withStar && m.tmdb ? `<button class="st ${on ? 'on' : ''}" title="Film favori" data-act="fm" data-tmdb="${m.tmdb}" data-title="${esc(m.title)}" data-poster="${esc(m.poster || '')}">${on ? '★' : '☆'}</button>` : ''}</div>`;
+  return `<div class="poster" ${SQ(18)}>${m.poster
+    ? `<img src="${esc(m.poster)}" alt="" loading="lazy" referrerpolicy="no-referrer" data-tmdb="${m.tmdb || ''}" data-title="${esc(m.title)}" onerror="posterFail(this)">`
+    : `<div class="ph"><span>${esc(m.title)}</span></div>`}
+    ${withStar && m.tmdb ? `<button ${SQ(9)} class="st ${on ? 'on' : ''}" title="Film favori" data-act="fm" data-tmdb="${m.tmdb}" data-title="${esc(m.title)}" data-poster="${esc(m.poster || '')}">${STAR}</button>` : ''}</div>`;
 };
 const lbLink = m => m.tmdb ? `<a href="https://letterboxd.com/tmdb/${m.tmdb}" target="_blank" rel="noopener" title="Letterboxd">${ICON_EXT}</a>` : '';
 
-/* ---------- Favoris ---------- */
 function barsHtml() {
-  const g = (k, items) => `<div class="bar">${items.map(([v, l]) => `<button class="${flt[k] === v ? 'on' : ''}" data-act="flt" data-k="${k}" data-v="${v}">${l}</button>`).join('')}</div>`;
+  const g = (k, items) => `<div class="bar" ${SQ(18)}>${items.map(([v, l]) => `<button ${SQ(10)} class="${flt[k] === v ? 'on' : ''}" data-act="flt" data-k="${k}" data-v="${v}">${l}</button>`).join('')}</div>`;
   return g('period', [['week', 'Cette semaine'], ['wk', 'Ce week-end']]) +
          g('type', [['all', 'Tout'], ['n', 'Séances normales'], ['a', 'Avant-premières'], ['p', 'Prochainement']]);
 }
@@ -204,10 +310,10 @@ function renderFav() {
     <h1>Séances</h1>
     ${notices.map(errBox).join('')}
     ${!key && !proxy ? errBox('Ajoute le proxy ou ta clé API dans Réglages pour charger les séances.') : ''}
-    <div class="chips">${favC.map(c => `<span class="chip">${esc(short(c.name))}<button class="x" data-act="rm" data-id="${esc(c.id)}" title="Retirer">${ICON_X}</button></span>`).join('') || '<span class="mut">Aucun cinéma favori. Utilise Recherche pour en ajouter.</span>'}</div>
+    <div class="chips top">${favC.map(c => `<span class="chip" ${SQ(51)}><span>${esc(short(c.name))}</span><button class="x" data-act="rm" data-id="${esc(c.id)}" title="Retirer">${ICON_X}</button></span>`).join('') || '<span class="mut">Aucun cinéma favori. Utilise Recherche pour en ajouter.</span>'}</div>
     <div class="bars" id="bars">${barsHtml()}</div>
-    <div id="all"><p class="mut" style="margin-top:42px">Chargement…</p></div>
-    <div id="favfilms"></div>`;
+    <div class="mine" id="mine"></div>
+    <div id="all"></div>`;
   updFilms();
   loadAll();
 }
@@ -225,23 +331,23 @@ async function loadAll() {
   });
   lastAll = favC.flatMap(c => (progs[c.id] || []).map(s => ({ ...s, c })));
   lastErrs = errs;
-  await loadRel([...new Set(lastAll.map(s => s.m.tmdb).filter(Boolean))]);
+  await Promise.all([loadRel([...new Set(lastAll.map(s => s.m.tmdb).filter(Boolean))]), fillPosters()]);
   drawAll(); updFilms();
 }
-function card({ m, s }) {
+function card({ m, s }, withBtn = true) {
   const rel = REL[m.tmdb], today = ymd(new Date());
-  const top = rel > today ? (s.some(x => x.t.slice(0, 10) < rel) ? 'Avant-première · ' : '') + 'sortie le ' + fmtD(rel) : (m.year || '');
-  return `<div>${posterHtml(m)}
-    <div class="info"><div class="tx"><div class="yr">${esc(top) || '&nbsp;'}</div>
-      <div class="nm">${esc(m.title)}${lbLink(m)}</div>
+  const top = rel > today ? (s && s.some(x => x.t.slice(0, 10) < rel) ? 'Avant-première · ' : '') + 'sortie le ' + fmtD(rel) : (m.year || '');
+  return `<div class="cd">${posterHtml(m)}
+    <div class="info"><div class="tx"><div class="y"><span>${esc(top)}</span>${lbLink(m)}</div>
+      <div class="nm">${esc(m.title)}</div>
       <div class="dr">${m.dir ? 'De ' + esc(m.dir) : ''}</div></div>
-      <button class="sb" data-act="sc" data-k="${esc(m.tmdb || m.id)}">Séances</button></div></div>`;
+      ${withBtn ? `<button class="sb" ${SQ(8)} data-act="sc" data-k="${esc(m.tmdb || m.id)}">Séances</button>` : ''}</div></div>`;
 }
 function drawAll() {
   const el = $('#all'); if (!el) return;
   $('#bars').innerHTML = barsHtml();
   const { start, end } = range(flt.period), today = ymd(new Date()), t = flt.type;
-  if ((t === 'a' || t === 'p') && !tmdbKey) { el.innerHTML = errBox('Ajoute ta clé TMDB dans Réglages pour distinguer avant-premières et sorties prochaines.'); return; }
+  if ((t === 'a' || t === 'p') && !tmdbKey) { el.innerHTML = errBox('Ajoute ta clé TMDB dans Réglages pour distinguer avant-premières et sorties prochaines.'); post(); return; }
   let q = lastAll.filter(s => { const d = s.t.slice(0, 10); return d >= start && d <= end; });
   if (t === 'n') q = q.filter(s => kind(s) === 'n');
   if (t === 'a') q = q.filter(s => kind(s) === 'a');
@@ -250,17 +356,23 @@ function drawAll() {
   q.sort((x, y) => x.t.localeCompare(y.t)).forEach(s => { const k = s.m.tmdb || s.m.id; if (!g.has(k)) g.set(k, { m: s.m, s: [] }); g.get(k).s.push(s); });
   lastFilms = [...g.values()];
   if (t === 'p') lastFilms.sort((x, y) => REL[x.m.tmdb].localeCompare(REL[y.m.tmdb]));
-  el.innerHTML = lastErrs.map(errBox).join('') + (lastFilms.length ? `<div class="grid">${lastFilms.map(card).join('')}</div>` : '<p class="mut" style="margin-top:42px">Aucun film.</p>');
+  el.innerHTML = lastErrs.map(errBox).join('') + (lastFilms.length ? `<div class="grid">${lastFilms.map(f => card(f)).join('')}</div>` : '<p class="mut" style="margin-top:58px">Aucun film.</p>');
+  post();
 }
 function updFilms() {
-  const el = $('#favfilms'); if (!el) return;
-  if (!favM.length) { el.innerHTML = ''; return; }
-  el.innerHTML = `<h2 class="sec">Films favoris</h2><div class="grid">${favM.map(f => {
-    const playing = lastAll.some(s => s.m.tmdb === f.tmdb);
-    return `<div>${posterHtml(f)}<div class="info"><div class="tx"><div class="nm">${esc(f.title)}${lbLink(f)}</div>
-      <div class="dr">${playing ? 'À l’affiche cette semaine' : 'Pas à l’affiche'}</div></div>
-      ${playing ? `<button class="sb" data-act="sc" data-k="${f.tmdb}">Séances</button>` : ''}</div></div>`;
-  }).join('')}</div>`;
+  const el = $('#mine'); if (!el) return;
+  const nowS = ymd(new Date()) + 'T' + new Date().toTimeString().slice(0, 5);
+  const items = favM.map(f => {
+    const q = lastAll.filter(x => x.m.tmdb === f.tmdb && x.t >= nowS).sort((a, b) => a.t.localeCompare(b.t));
+    return q.length ? { f, m: q[0].m, next: q[0].t } : null;
+  }).filter(Boolean).sort((a, b) => a.next.localeCompare(b.next));
+  el.innerHTML = `<h2>Mes prochaines séances</h2><div class="mrow">${items.map(({ f, m }) => {
+    const src = m.poster || f.poster;
+    return `<button class="mp" ${SQ(11)} data-act="sc" data-k="${f.tmdb}" title="${esc(m.title)}">${src
+      ? `<img src="${esc(src)}" alt="" referrerpolicy="no-referrer" data-tmdb="${f.tmdb}" data-title="${esc(m.title)}" onerror="posterFail(this)">`
+      : `<div class="ph"><span>${esc(m.title)}</span></div>`}</button>`;
+  }).join('')}<button class="add" data-act="addfilm" data-sqd="11" title="Ajouter un film"><svg class="d"></svg>${PLUS}</button></div>`;
+  post();
 }
 function openModal(k) {
   const s = lastAll.filter(x => String(x.m.tmdb || x.m.id) === String(k)).sort((a, b) => a.t.localeCompare(b.t));
@@ -268,28 +380,28 @@ function openModal(k) {
   const m = s[0].m, days = [...new Set(s.map(x => x.t.slice(0, 10)))];
   const chip = x => {
     const lab = `${esc(x.t.slice(11, 16))}<small>${esc(x.v === 'UNKNOWN' ? '' : x.v)}${x.f && x.f !== '2D' && x.f !== 'UNKNOWN' ? ' ' + esc(x.f) : ''}</small>`;
-    return x.b ? `<a href="${esc(x.b)}" target="_blank" rel="noopener">${lab}</a>` : `<span>${lab}</span>`;
+    return x.b ? `<a ${SQ(8)} href="${esc(x.b)}" target="_blank" rel="noopener">${lab}</a>` : `<span ${SQ(8)}>${lab}</span>`;
   };
   const o = document.createElement('div');
   o.className = 'ov'; o.dataset.act = 'close';
-  o.innerHTML = `<div class="md"><div class="top"><div><h3>${esc(m.title)}</h3>
-    <div class="mut" style="margin-top:6px">${[m.year, m.dur && m.dur + ' min', m.dir, (m.genres || []).slice(0, 2).join(', ')].filter(Boolean).map(esc).join(' · ')}</div></div>
+  o.innerHTML = `<div class="md" ${SQ(18)}><div class="mh"><div><h3>${esc(m.title)}</h3>
+    <div class="mut" style="margin:6px 0 0">${[m.year, m.dur && m.dur + ' min', m.dir, (m.genres || []).slice(0, 2).join(', ')].filter(Boolean).map(esc).join(' · ')}</div></div>
     <button class="x" data-act="close" title="Fermer">${ICON_X}</button></div>
     ${days.map(d => `<div class="dy">${esc(dayLab(d))}</div>${[...new Set(s.filter(x => x.t.slice(0, 10) === d).map(x => x.c.id))].map(cid =>
       `<div class="cn">${esc(short(favC.find(c => c.id === cid)?.name || ''))}</div><div class="tm">${s.filter(x => x.t.slice(0, 10) === d && x.c.id === cid).map(chip).join('')}</div>`).join('')}`).join('')}
   </div>`;
   document.body.appendChild(o);
+  sqScan();
 }
 
-/* ---------- Recherche ---------- */
 function renderSearch() {
   $('#app').innerHTML = `
     <h1>Recherche</h1>
-    <div class="row" style="max-width:640px">
-      <select id="mode"><option value="c">Cinémas</option><option value="f">Films à l’affiche</option></select>
-      <input id="q" placeholder="Nom ou code postal">
-      <input id="city" placeholder="Ville (cinémas)">
-      <button class="btn" data-act="search">Chercher</button>
+    <div class="row" style="max-width:640px;margin-top:0">
+      <select id="mode" ${SQ(10)}><option value="c">Cinémas</option><option value="f">Films à l’affiche</option></select>
+      <input id="q" ${SQ(10)} placeholder="Nom ou code postal">
+      <input id="city" ${SQ(10)} placeholder="Ville (cinémas)">
+      <button class="btn" ${SQ(10)} data-act="search">Chercher</button>
     </div><div id="res"></div>`;
 }
 async function doSearch() {
@@ -302,45 +414,41 @@ async function doSearch() {
       if (/^\d{2,5}$/.test(q)) p.set('zip_code', q); else if (q) p.set('q', q);
       if (city) p.set('city', city);
       const { data } = await api('/cinemas?' + p);
-      res.innerHTML = data.length ? data.map(c => `<div class="rc"><div><b>${esc(c.name)}</b><div class="mut">${esc([c.address, c.postalCode, c.city].filter(Boolean).join(' '))}</div></div>
-        <button class="btn ${favC.some(x => x.id === c.id) ? '' : 'l'}" data-act="tg" data-id="${esc(c.id)}" data-name="${esc(c.name)}" data-city="${esc(c.city)}">${favC.some(x => x.id === c.id) ? '★ Favori' : '☆ Ajouter'}</button></div>`).join('') : '<p class="mut">Aucun résultat.</p>';
+      res.innerHTML = data.length ? data.map(c => `<div class="rc" ${SQ(18)}><div><div>${esc(c.name)}</div><div class="mut" style="margin:2px 0 0">${esc([c.address, c.postalCode, c.city].filter(Boolean).join(' '))}</div></div>
+        <button class="btn ${favC.some(x => x.id === c.id) ? '' : 'l'}" ${SQ(10)} data-act="tg" data-id="${esc(c.id)}" data-name="${esc(c.name)}" data-city="${esc(c.city)}">${favC.some(x => x.id === c.id) ? '★ Favori' : '☆ Ajouter'}</button></div>`).join('') : '<p class="mut">Aucun résultat.</p>';
     } else {
       const { data } = await api('/movies?' + new URLSearchParams({ q, playing: 'true', country: 'FR', limit: '24' }));
       const seen = new Set();
       const list = data.filter(m => { const k = m.tmdbId || m.id; if (seen.has(k)) return false; seen.add(k); return true; });
-      res.innerHTML = list.length ? `<div class="grid">${list.map(m => {
-        const mm = { tmdb: m.tmdbId, title: m.title, poster: m.posterUrl };
-        return `<div>${posterHtml(mm)}<div class="info"><div class="tx"><div class="yr">${esc(m.year || '')}</div><div class="nm">${esc(m.title)}${lbLink(mm)}</div><div class="dr">${m.director ? 'De ' + esc(m.director) : ''}</div></div></div></div>`;
-      }).join('')}</div>` : '<p class="mut">Aucun film.</p>';
+      res.innerHTML = list.length ? `<div class="grid">${list.map(m => card({ m: { tmdb: m.tmdbId, id: m.id, title: m.title, poster: m.posterUrl, year: m.year, dir: m.director }, s: null }, false)).join('')}</div>` : '<p class="mut">Aucun film.</p>';
     }
   } catch (e) { res.innerHTML = errBox(e.message); }
+  post();
 }
 
-/* ---------- Réglages ---------- */
 function renderSet() {
   $('#app').innerHTML = `
     <h1>Réglages</h1>
-    <div class="card"><b>Proxy (recommandé)</b>
+    <div class="card" ${SQ(18)}><div>Proxy (recommandé)</div>
       <p>Adresse de ton Cloudflare Worker (worker.js). Il garde la clé API Cinéma côté serveur.</p>
-      <div class="row" style="margin:0"><input id="proxy" placeholder="https://xxx.workers.dev" value="${esc(proxy)}"></div></div>
-    <div class="card"><b>Clé API Cinéma (sans proxy)</b>
+      <input id="proxy" ${SQ(10)} placeholder="https://xxx.workers.dev" value="${esc(proxy)}" style="width:100%"></div>
+    <div class="card" ${SQ(18)}><div>Clé API Cinéma (sans proxy)</div>
       <p>Stockée uniquement dans ce navigateur, jamais dans le fichier.</p>
-      <div class="row" style="margin:0"><input id="key" type="password" placeholder="ac_live_…" value="${esc(key)}"></div></div>
-    <div class="card"><b>Clé TMDB (gratuite)</b>
-      <p>Date de sortie française des films : avant-premières et sorties prochaines.</p>
-      <div class="row" style="margin:0"><input id="tmdb" type="password" placeholder="Clé API v3" value="${esc(tmdbKey)}"></div></div>
-    <div class="row"><button class="btn" data-act="savekey">Enregistrer</button>
-      <button class="btn l" data-act="refresh">Vider le cache</button></div>
-    <p class="mut" style="max-width:640px">Les programmes sont gardés 12 h en cache pour économiser les 150 requêtes hebdomadaires.</p>`;
+      <input id="key" ${SQ(10)} type="password" placeholder="ac_live_…" value="${esc(key)}" style="width:100%"></div>
+    <div class="card" ${SQ(18)}><div>Clé TMDB (gratuite)</div>
+      <p>Date de sortie française des films (avant-premières, sorties prochaines) et affiches de secours.</p>
+      <input id="tmdb" ${SQ(10)} type="password" placeholder="Clé API v3" value="${esc(tmdbKey)}" style="width:100%"></div>
+    <div class="row"><button class="btn" ${SQ(10)} data-act="savekey">Enregistrer</button>
+      <button class="btn l" ${SQ(10)} data-act="refresh">Vider le cache</button></div>
+    <p class="mut" style="max-width:640px;margin-top:20px">Les programmes sont gardés 12 h en cache pour économiser les 150 requêtes hebdomadaires.</p>`;
 }
 
-/* ---------- Actions ---------- */
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
   const d = b.dataset;
   if (d.act === 'close') { if (e.target.closest('.md') && !e.target.closest('.x')) return; document.querySelector('.ov')?.remove(); }
   else if (d.act === 'tab') setView(d.v);
-  else if (d.act === 'rm') { favC = favC.filter(c => c.id !== d.id); LS.set('favC', favC); lastAll = lastAll.filter(s => s.c.id !== d.id); renderFav(); }
+  else if (d.act === 'rm') { favC = favC.filter(c => c.id !== d.id); LS.set('favC', favC); lastAll = lastAll.filter(s => s.c.id !== d.id); renderFav(); post(); }
   else if (d.act === 'tg') {
     if (favC.some(c => c.id === d.id)) favC = favC.filter(c => c.id !== d.id); else favC.push({ id: d.id, name: d.name, city: d.city });
     LS.set('favC', favC); const on = favC.some(c => c.id === d.id);
@@ -353,9 +461,10 @@ document.addEventListener('click', async e => {
     if (favM.some(f => f.tmdb === t)) favM = favM.filter(f => f.tmdb !== t); else favM.push({ tmdb: t, title: d.title, poster: d.poster });
     LS.set('favM', favM);
     const on = favM.some(f => f.tmdb === t);
-    document.querySelectorAll(`.st[data-tmdb="${t}"]`).forEach(x => { x.textContent = on ? '★' : '☆'; x.classList.toggle('on', on); });
+    document.querySelectorAll(`.st[data-tmdb="${t}"]`).forEach(x => x.classList.toggle('on', on));
     updFilms();
   }
+  else if (d.act === 'addfilm') { setView('search'); $('#mode').value = 'f'; $('#q').focus(); }
   else if (d.act === 'search') doSearch();
   else if (d.act === 'savekey') {
     key = $('#key').value.trim(); LS.set('key', key);
@@ -370,7 +479,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Enter' && (e.target.id === 'q' || e.target.id === 'city')) doSearch();
 });
 
-(async () => { updFoot(); setView('fav'); await initDefaults(); if (notices.length) renderFav(); else if (favC.length && !lastAll.length && !$('#all')?.querySelector('.grid')) renderFav(); })();
+(async () => { updFoot(); setView('fav'); await initDefaults(); if (notices.length) renderFav(); post(); })();
 </script>
 </body>
 </html>
