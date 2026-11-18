@@ -31,6 +31,7 @@ h1{font:600 45px/1.33 var(--f);letter-spacing:-.07em;color:var(--ink);margin:67p
 .bar{display:flex;gap:10px;padding:10px;background:#fff}
 .bar button{width:155px;height:40px;border:0;background:#fff;color:var(--ink2);font:400 14px/1.33 var(--f);letter-spacing:-.07em;cursor:pointer;white-space:nowrap}
 .bar button.on{background:var(--ink);color:#fff}
+.bar button.m{width:100px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,182px);gap:63px 36px;justify-content:start;margin:58px 0 0 3px}
 @media(max-width:700px){.grid{margin-left:0;justify-content:center}}
 .cd{width:182px}
@@ -171,7 +172,7 @@ let tmdbKey = LS.get('tmdbKey', ''), proxy = LS.get('proxy', ''), key = LS.get('
 const migrateFav = f => ({ ...f, k: f.k || (f.tmdb ? 't' + f.tmdb : 'x' + f.title) });
 favM = favM.map(migrateFav);
 let view = 'fav', notices = [], progs = {}, REL = {}, lastAll = [], lastErrs = [], lastFilms = [],
-    flt = { period: 'week', type: 'all' };
+    flt = { period: 'week', type: 'all', morning: false };
 
 async function api(path) {
   if (!key && !proxy) throw new Error('Ajoute le proxy ou ta clé API dans Réglages.');
@@ -339,6 +340,7 @@ const lbLink = m => m.tmdb ? `<a href="https://letterboxd.com/tmdb/${m.tmdb}" ta
 function barsHtml() {
   const g = (k, items) => `<div class="bar" ${SQ(18)}>${items.map(([v, l]) => `<button ${SQ(10)} class="${flt[k] === v ? 'on' : ''}" data-act="flt" data-k="${k}" data-v="${v}">${l}</button>`).join('')}</div>`;
   return g('period', [['week', 'Cette semaine'], ['wk', 'Ce week-end']]) +
+         `<div class="bar" ${SQ(18)}><button ${SQ(10)} class="m ${flt.morning ? 'on' : ''}" data-act="flt" data-k="morning" data-v="1">Matin</button></div>` +
          g('type', [['all', 'Tout'], ['n', 'Séances normales'], ['a', 'Avant-premières'], ['p', 'Prochainement']]);
 }
 function renderFav() {
@@ -381,7 +383,7 @@ function drawAll() {
   const el = $('#all'); if (!el) return;
   $('#bars').innerHTML = barsHtml();
   const { start, end } = range(flt.period), today = ymd(new Date()), t = flt.type;
-  let q = lastAll.filter(s => { const d = s.t.slice(0, 10); return d >= start && d <= end; });
+  let q = lastAll.filter(s => { const d = s.t.slice(0, 10); return d >= start && d <= end && (!flt.morning || +s.t.slice(11, 13) < 12); });
   if (t === 'n') q = q.filter(s => kind(s) === 'n');
   if (t === 'a') q = q.filter(s => kind(s) === 'a');
   if (t === 'p') q = q.filter(s => REL[s.m.tmdb] > today);
@@ -409,7 +411,7 @@ function updFilms() {
   post();
 }
 function openModal(k) {
-  const s = lastAll.filter(x => fk(x.m) === k).sort((a, b) => a.t.localeCompare(b.t));
+  const s = lastAll.filter(x => fk(x.m) === k && (!flt.morning || +x.t.slice(11, 13) < 12)).sort((a, b) => a.t.localeCompare(b.t));
   if (!s.length) return;
   const m = s[0].m, days = [...new Set(s.map(x => x.t.slice(0, 10)))];
   const chip = x => {
@@ -513,7 +515,7 @@ document.addEventListener('click', async e => {
     LS.set('favC', favC); const on = isFav(d.id);
     b.textContent = on ? '★ Favori' : '☆ Ajouter'; b.classList.toggle('l', !on);
   }
-  else if (d.act === 'flt') { flt[d.k] = d.v; drawAll(); }
+  else if (d.act === 'flt') { if (d.k === 'morning') flt.morning = !flt.morning; else flt[d.k] = d.v; drawAll(); }
   else if (d.act === 'sc') openModal(d.k);
   else if (d.act === 'fm') {
     const k = d.k;
